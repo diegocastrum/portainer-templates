@@ -1,0 +1,33 @@
+[
+  {
+    "type": 1,
+    "title": "Traefik v2.0 (type1)",
+    "description": "The Cloud Native Edge Router",
+    "note": "An open-source reverse proxy and load balancer for HTTP and TCP-based applications that is easy, dynamic, automatic, fast, full-featured, production proven, provides metrics, and integrates with every major cluster technology",
+    "categories": ["network", "router", "docker"],
+    "platform": "linux",
+    "image": "traefik:v2.1",
+    "ports": [
+      "3000/tcp",
+      "3306/tcp",
+      "443/tcp",
+      "5000/tcp",
+      "5432/tcp",
+      "80/tcp",
+      "8080/tcp",
+      "9000/tcp"
+    ],
+    "volumes":[
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock",
+        "readonly": true
+      },
+      {
+        "container": "/etc/traefik/traefik.yml",
+        "bind": "/etc/traefik/traefik.yml",
+        "readonly": true
+      }
+    ],
+  }
+]
