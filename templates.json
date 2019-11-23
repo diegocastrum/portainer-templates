@@ -28,6 +28,6 @@
         "bind": "/etc/traefik/traefik.yml",
         "readonly": true
       }
-    ],
+    ]
   }
 ]
