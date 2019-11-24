@@ -30,5 +30,93 @@
         "readonly": true
       }
     ]
+  },
+  {
+    "type": 1,
+    "title": "Gitlab CE 12.5",
+    "description": "Open-source end-to-end software development platform",
+    "note": "Default username is <b>root</b>. Check the <a href=\"https://docs.gitlab.com/omnibus/docker/README.html#after-starting-a-container\" target=\"_blank\">Gitlab documentation</a> to get started.",
+    "categories": ["development", "project-management"],
+    "platform": "linux",
+    "logo": "https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/gitlab_ce.png",
+    "image": "gitlab/gitlab-ce:12.5.0-ce.0",
+    "ports": [
+      "80:80/tcp",
+      "443:443/tcp",
+      "22:22/tcp"
+    ],
+    "volumes": [
+      { "container": "/etc/gitlab" },
+      { "container": "/var/log/gitlab" },
+      { "container": "/var/opt/gitlab" }
+    ],
+    "env": [
+      {
+        "name": "GITLAB_OMNIBUS_CONFIG",
+        "label": "Gitlab pre-configuration",
+        "type": "container"
+      }
+    ],
+    "labels": [
+      {
+          "name": "traefik.enable",
+          "value": "true"
+      },
+      {
+          "name": "traefik.docker.network",
+          "value": "proxy"
+      },
+
+      {
+          "name": "traefik.http.routers.gitlab_http.rule",
+          "value": "Host(``)"
+      },
+      {
+          "name": "traefik.http.routers.gitlab_http.entrypoints",
+          "value": "http"
+      },
+      {
+          "name": "traefik.http.routers.gitlab_http.service",
+          "value": "gitlab_http@docker"
+      },
+      {
+          "name": "traefik.http.services.gitlab_http.loadbalancer.server.port",
+          "value": "80"
+      },
+
+      {
+          "name": "traefik.http.routers.gitlab_https.rule",
+          "value": "Host(``)"
+      },
+      {
+          "name": "traefik.http.routers.gitlab_https.entrypoints",
+          "value": "https"
+      },
+      {
+          "name": "traefik.http.routers.gitlab_https.service",
+          "value": "gitlab_https@docker"
+      },
+      {
+          "name": "traefik.http.services.gitlab_https.loadbalancer.server.port",
+          "value": "443"
+      },
+
+      {
+          "name": "traefik.http.routers.gitlab_ssh.rule",
+          "value": "Host(``)"
+      },
+      {
+          "name": "traefik.http.routers.gitlab_ssh.entrypoints",
+          "value": "ssh"
+      },
+      {
+          "name": "traefik.http.routers.gitlab_ssh.service",
+          "value": "gitlab_ssh@docker"
+      },
+      {
+          "name": "traefik.http.services.gitlab_ssh.loadbalancer.server.port",
+          "value": "22"
+      }
+    ]
   }
 ]
